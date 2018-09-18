@@ -11,9 +11,11 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(collectionResourceRel = "users", path = "users")
 public interface UserRepository extends JpaRepository<User, Long>{
 
-	List<User> findByLastName(@Param("lastname") String lastname);
+	public List<User> findByLastName(@Param("lastname") String lastname);
 
 	@Query("select u from User u where u.username = ?1 and u.password = ?2")
-	User findByUsernameAndPassword(String username, String password);
+	public User findByUsernameAndPassword(String username, String password);
+
+	public List<User> findAll();
 
 }
