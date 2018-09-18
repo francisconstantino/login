@@ -2,20 +2,83 @@
 <html>
 <head>
 <meta charset="ISO-8859-1" />
-<title>Insert title here</title>
+<title>Login</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous" />
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+
+<!-- Compiled and minified JavaScript -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet" />
 </head>
+<style>
+.container {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+html, body, .my-wrapper {
+	height: 90%;
+}
+
+fieldset {
+	background-color: white;
+	margin: 20px;
+	padding: 0 50px 10px;
+	border: 1px solid #666;
+	border-radius: 8px;
+	padding-top: 10px;
+}
+
+button {
+	border-radius: 30px;
+}
+</style>
 <body>
-	<fieldset>
-		<legend>Please input information</legend>
-		<form action="/login" method="POST">
-			<p>
-				Username: <input type="text" name="username" />
-			</p>
-			<p>
-				Password: <input type="password" name="password" />
-			</p>
-			<input type="submit" value="Submit" />
-		</form>
-	</fieldset>
+	<div class="my-wrapper valign-wrapper center-align container">
+		<fieldset>
+			<legend>Please input information</legend>
+			<form action="/login" method="POST">
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="username" type="text" name="username"
+							required="required" /> <label>Username</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="password" type="password" name="password"
+							required="required" /> <label>Password</label>
+					</div>
+				</div>
+				<div class="center-align">
+					<!--  <input type="submit" value="Submit"> -->
+					<button class="btn waves-effect waves-light pink darken-1"
+						type="submit" name="action">
+						Submit <i class="material-icons right">send</i>
+					</button>
+				</div>
+			</form>
+		</fieldset>
+	</div>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+		crossorigin="anonymous"></script>
 </body>
 </html>
