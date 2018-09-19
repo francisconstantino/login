@@ -49,6 +49,7 @@ public class LoginController {
 		if (output.contains("User is an admin")) {
 			mv.setViewName("crudDisplay");
 		} else if (output.contains("User is valid")) {
+			mv.addObject("username", username);
 			mv.setViewName("welcome");
 		} else {
 			mv.setViewName("index");

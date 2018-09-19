@@ -3,6 +3,7 @@
 <head>
 <meta charset="ISO-8859-1" />
 <title>Insert title here</title>
+<script src="jquery-3.3.1.js"></script>
 <!-- Compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
@@ -48,11 +49,13 @@ button {
 <body>
 	<div class="my-wrapper valign-wrapper center-align container">
 		<fieldset>
-			<legend><b>Update User</b></legend>
+			<legend>
+				<b>Update User</b>
+			</legend>
 			<form method="POST" action="/updateUser">
 				<div class="input-field col s12">
-					<h4 th:text="'Update User #' + ${id}"/>
-					<input type="hidden" name="id" th:value='${id}'/>
+					<h4 th:text="'Update User #' + ${id}" />
+					<input type="hidden" name="id" th:value='${id}' id="id" />
 				</div>
 				<div class="input-field col s12">
 					<input id="username" type="text" name="username"
@@ -71,8 +74,8 @@ button {
 						required="required" /> <label>Last Name*</label>
 				</div>
 				<div class="input-field col s12">
-					<input id="email" type="text" name="email"
-						required="required" /> <label>Email*</label>
+					<input id="email" type="text" name="email" required="required" />
+					<label>Email*</label>
 				</div>
 				<div class="input-field col s12">
 					<select class="browser-default" name="role">
@@ -92,5 +95,34 @@ button {
 			</form>
 		</fieldset>
 	</div>
+	<script>
+		var id = document.getElementById("id").value;
+
+		$(document).ready(function() {
+			loadData();
+		})
+
+		function loadData() {
+			$.ajax({
+				type : "POST",
+				datatype : "json",
+				url : "http://localhost:8081/userservice/findUser/" + id,
+				success : function(json) {
+					$('#firstName').val(json.firstName);
+					$('#firstName').focus();
+					$('#lastName').val(json.lastName);
+					$('#lastName').focus();
+					$('#username').val(json.username);
+					$('#username').focus();
+					$('#password').val(json.password);
+					$('#password').focus();
+					$('#email').val(json.email);
+					$('#email').focus();
+					$('#role').val(json.role);
+					$('#role').focus();
+				}
+			})
+		}
+	</script>
 </body>
 </html>

@@ -135,6 +135,16 @@ public class UserService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void updateUser(@PathParam(value="id") Long id, User user) {
 		userRepository.save(user);
+
 	}
+	//http://localhost:8081/userservice/findUser/{id}
+	@POST
+	@Path("/findUser/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public User findUser(@PathParam(value="id") Long id) {
+		return userRepository.findOneById(id);
+	}
+
+
 
 }
