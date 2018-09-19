@@ -18,10 +18,24 @@
 		<div class="text-center">
 			<h2>Admin CRUD</h2>
 		</div>
-		<div class="text-center">
-			<a href="/add"><button class="btn btn-primary">Add User</button></a>
+		<div class="row">
+			<div>
+				<a href="/add"><button class="btn btn-primary">
+						<b>Add User</b>
+					</button></a>
+			</div> &nbsp; &nbsp;
+			<div>
+				<a href="/delete"><button class="btn btn-warning">
+						<b>Delete User</b>
+					</button></a>
+			</div> &nbsp; &nbsp;
+			<div>
+				<a href="/update"><button class="btn btn-info">
+						<b>Update User</b>
+					</button></a>
+			</div>
 		</div>
-		<br/>
+		<br />
 		<table class="table table-striped">
 			<thead id="table">
 				<tr>
@@ -30,7 +44,7 @@
 					<th scope="col">Last</th>
 					<th scope="col">Username</th>
 					<th scope="col">Password</th>
-					<th scope="col">E-mail</th>
+					<th scope="col">Email</th>
 					<th scope="col">Role</th>
 					<th scope="col">Update</th>
 				</tr>
@@ -47,36 +61,73 @@
 		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
 		crossorigin="anonymous"></script>
 	<script>
-		$(document).ready(
-				function() {
+		$(document).ready(function() {
+			loadPages();
+		})
 
-					$.ajax({
-						type : "POST",
-						datatype : "json",
-						url : "http://localhost:8081/userservice/getAll",
-						success : function(json) {
-							alert("Succesfully Retrieved Information.");
-						}
-					}).then(
-							function(json) {
-								json.forEach(function(obj) {
-									$("#table").after(
-											"" + "<tbody>" + "<tr>" + "<td>"
-													+ obj.id + "</td>" + "<td>"
-													+ obj.firstName + "</td>"
-													+ "<td>" + obj.lastName
-													+ "</td>" + "<td>"
-													+ obj.username + "</td>"
-													+ "<td>" + obj.password
-													+ "</td>" + "<td>"
-													+ obj.email + "</td>"
-													+ "<td>" + obj.role
-													+ "</td>"
-													+ "</tr>"
-													+ "</tbody>");
+		function loadPages() {
+
+			$.ajax({
+				type : "POST",
+				datatype : "json",
+				url : "http://localhost:8081/userservice/getAll",
+				success : function(json) {
+					alert("Succesfully Retrieved Information.");
+				}
+			})
+	.then(
+			function(json) {
+				json
+				.forEach(function(obj) {
+					$("#table")
+						.after(
+						''
+							+ '<tbody><tr><td>'
+							+ obj.id
+							+ '</td>'
+							+ '<td>'
+							+ obj.firstName
+							+ '</td>'
+							+ '<td>'
+							+ obj.lastName
+							+ '</td>'
+							+ '<td>'
+							+ obj.username
+							+ '</td>'
+							+ '<td>'
+							+ obj.password
+							+ '</td>'
+							+ '<td>'
+							+ obj.email
+							+ '</td>'
+							+ '<td>'
+							+ obj.role
+							+ '</td>'
+							+ '<td><button class="btn btn-warning" name="delete" id="'+obj.id+'">Delete</button>'
+							+ '</td></tr></tbody>');
+						});
+				deleteRow();
+			});
+		}
+
+		function deleteRow() {
+
+			$('button[name="delete"]')
+					.click(
+							function() {
+								alert('deleted');
+								var url = "http://localhost:8081/userservice/deleteUser/"
+										+ this.id;
+								$.ajax({
+									type : "DELETE",
+									url : url,
+									success : function(json) {
+										alert('User was succesfully deleted.');
+										loadPages();
+									}
 								})
-							});
-				});
+							})
+		}
 	</script>
 </body>
 </html>

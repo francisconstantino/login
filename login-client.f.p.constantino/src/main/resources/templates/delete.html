@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1" />
+<title>Insert title here</title>
+<script src="jquery-3.3.1.js"></script>
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+
+<!-- Compiled and minified JavaScript -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet" />
+<script>
+	$(document).ready(function() {
+		$('select').material_select();
+	});
+</script>
+</head>
+<style>
+.container {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+html, body, .my-wrapper {
+	height: 90%;
+}
+
+fieldset {
+	background-color: white;
+	margin: 20px;
+	padding: 0 100px 70px;
+	border: 1px solid #666;
+	border-radius: 8px;
+	padding-top: 10px;
+}
+
+button {
+	border-radius: 30px;
+}
+</style>
+<body>
+	<div class="my-wrapper valign-wrapper center-align container">
+		<fieldset>
+			<legend>Delete User</legend>
+			<form method="POST" action="/deleteUser">
+				<div class="input-field col s12">
+					<select class="browser-default" name="id">
+						<option value="" disabled="true" selected="true" name="id" id="selectChoices">
+							Users*</option>
+					</select>
+				</div>
+				<div class="center-align">
+					<!--  <input type="submit" value="Submit"> -->
+					<button class="btn waves-effect waves-light pink darken-1"
+						type="submit" name="action">
+						Submit <i class="material-icons right">send</i>
+					</button>
+				</div>
+			</form>
+		</fieldset>
+	</div>
+	<script>
+		$(document).ready(function() {
+			loadPages();
+		})
+
+		function loadPages() {
+
+			$.ajax({
+				type : "POST",
+				datatype : "json",
+				url : "http://localhost:8081/userservice/getAll",
+				success : function(json) {
+					alert("Succesfully Retrieved Information.");
+				}
+			})
+	.then(
+			function(json) {
+				json
+				.forEach(function(obj) {
+					$("#selectChoices")
+						.after( '' +
+							'<option value="' + obj.id + '">'
+							+ 'id: ' + obj.id + '    ' + '--------' +'     ' + obj.username + '</option>');
+						});
+			});
+		}
+	</script>
+</body>
+</html>

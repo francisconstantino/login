@@ -2,6 +2,7 @@ package com.accenture.login.controller;
 
 import java.util.Base64;
 
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
 import org.json.JSONException;
@@ -79,6 +80,26 @@ public class LoginController {
 				.post(ClientResponse.class, json.toString());
 
 		mv.setViewName("crudDisplay");
+		return mv;
+	}
+
+	@RequestMapping("/update")
+	public String updateView() {
+		return "updateData";
+	}
+
+	@RequestMapping("/delete")
+	public String deleteView() {
+		return "delete";
+	}
+
+	@RequestMapping("/deleteUser")
+	public ModelAndView deleteUser (@RequestParam String id, ModelAndView mv) {
+		Client client = new Client();
+		WebResource wr = client.resource("http://localhost:8081/userservice/deleteUser/" + id);
+		System.out.println(id);
+		ClientResponse response = wr.delete(ClientResponse.class);
+		mv.setViewName("delete");
 		return mv;
 	}
 }
