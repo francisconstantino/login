@@ -56,6 +56,10 @@ public class LoginController {
 		return mv;
 	}
 
+	@RequestMapping("/home")
+	public String homeView() {
+		return "crudDisplay";
+	}
 	@RequestMapping("/add")
 	public String add() {
 		return "add";
@@ -84,8 +88,11 @@ public class LoginController {
 	}
 
 	@RequestMapping("/update")
-	public String updateView() {
-		return "updateData";
+	public ModelAndView updateView(@RequestParam String id, ModelAndView mv) {
+		System.out.println(id);
+		mv.addObject("id", id);
+		mv.setViewName("updateData");
+		return mv;
 	}
 
 	@RequestMapping("/delete")
@@ -101,5 +108,27 @@ public class LoginController {
 		ClientResponse response = wr.delete(ClientResponse.class);
 		mv.setViewName("delete");
 		return mv;
+	}
+
+	@RequestMapping("/updateUser")
+	public ModelAndView updateUser(@RequestParam String id, String username,
+			String password, String firstName, String lastName, String email, String role, ModelAndView mv) throws JSONException {
+		JSONObject json = new JSONObject();
+		json.put("id", id);
+		json.put("firstName", firstName);
+		json.put("lastName", lastName);
+		json.put("username", username);
+		json.put("password", password);
+		json.put("email", email);
+		json.put("role", role);
+
+		Client client = new Client();
+		WebResource wr = client.resource("http://localhost:8081/userservice/updateUser/" + id);
+
+		ClientResponse response = wr.type(MediaType.APPLICATION_JSON)
+				.post(ClientResponse.class, json.toString());
+		mv.setViewName("crudDisplay");
+		return mv;
+
 	}
 }

@@ -53,8 +53,8 @@ button {
 			<form method="POST" action="/deleteUser">
 				<div class="input-field col s12">
 					<select class="browser-default" name="id">
-						<option value="" disabled="true" selected="true" name="id" id="selectChoices">
-							Users*</option>
+						<option value="" disabled="true" selected="true" name="id"
+							id="selectChoices">Users*</option>
 					</select>
 				</div>
 				<div class="center-align">
@@ -63,6 +63,11 @@ button {
 						type="submit" name="action">
 						Submit <i class="material-icons right">send</i>
 					</button>
+				</div>
+				<br/>
+				<br/>
+				<div class="center-align">
+					<a href="/home">Go Back</a>
 				</div>
 			</form>
 		</fieldset>
@@ -79,19 +84,17 @@ button {
 				datatype : "json",
 				url : "http://localhost:8081/userservice/getAll",
 				success : function(json) {
-					alert("Succesfully Retrieved Information.");
 				}
-			})
-	.then(
-			function(json) {
-				json
-				.forEach(function(obj) {
-					$("#selectChoices")
-						.after( '' +
-							'<option value="' + obj.id + '">'
-							+ 'id: ' + obj.id + '    ' + '--------' +'     ' + obj.username + '</option>');
+			}).then(
+					function(json) {
+						json.forEach(function(obj) {
+							$("#selectChoices").after(
+									'' + '<option value="' + obj.id + '">'
+											+ 'id: ' + obj.id + '    '
+											+ '--------' + '     '
+											+ obj.username + '</option>');
 						});
-			});
+					});
 		}
 	</script>
 </body>

@@ -129,11 +129,12 @@ public class UserService {
 		userRepository.delete(id);
 	}
 
-	//http://localhost:8081/userservice/deleteUser/{id}
+	//http://localhost:8081/userservice/updateUser/{id}
 	@POST
 	@Path("/updateUser/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void updateUser(@PathParam(value="id") Long id, User user) {
 		userRepository.save(user);
 	}
+
 }

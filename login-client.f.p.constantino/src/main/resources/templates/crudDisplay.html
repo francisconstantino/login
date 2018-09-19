@@ -23,17 +23,32 @@
 				<a href="/add"><button class="btn btn-primary">
 						<b>Add User</b>
 					</button></a>
-			</div> &nbsp; &nbsp;
+			</div>
+			&nbsp; &nbsp;
 			<div>
 				<a href="/delete"><button class="btn btn-warning">
 						<b>Delete User</b>
 					</button></a>
-			</div> &nbsp; &nbsp;
+			</div>
+			&nbsp; &nbsp;
+		</div>
+		<br /> <br />
+		<div>
+		<form method="POST" action="/update">
+		<div class="row">
 			<div>
 				<a href="/update"><button class="btn btn-info">
 						<b>Update User</b>
 					</button></a>
+			</div> &nbsp; &nbsp;
+			<div>
+				<select class="browser-default" name="id">
+						<option value="" disabled="true" selected="true" name="id"
+							id="selectChoices">User ID's*</option>
+					</select>
 			</div>
+		</div>
+		</form>
 		</div>
 		<br />
 		<table class="table table-striped">
@@ -46,7 +61,6 @@
 					<th scope="col">Password</th>
 					<th scope="col">Email</th>
 					<th scope="col">Role</th>
-					<th scope="col">Update</th>
 				</tr>
 			</thead>
 		</table>
@@ -63,71 +77,74 @@
 	<script>
 		$(document).ready(function() {
 			loadPages();
+			loadIds();
 		})
 
 		function loadPages() {
 
 			$.ajax({
-				type : "POST",
-				datatype : "json",
-				url : "http://localhost:8081/userservice/getAll",
-				success : function(json) {
-					alert("Succesfully Retrieved Information.");
-				}
-			})
-	.then(
-			function(json) {
-				json
-				.forEach(function(obj) {
-					$("#table")
-						.after(
-						''
-							+ '<tbody><tr><td>'
-							+ obj.id
-							+ '</td>'
-							+ '<td>'
-							+ obj.firstName
-							+ '</td>'
-							+ '<td>'
-							+ obj.lastName
-							+ '</td>'
-							+ '<td>'
-							+ obj.username
-							+ '</td>'
-							+ '<td>'
-							+ obj.password
-							+ '</td>'
-							+ '<td>'
-							+ obj.email
-							+ '</td>'
-							+ '<td>'
-							+ obj.role
-							+ '</td>'
-							+ '<td><button class="btn btn-warning" name="delete" id="'+obj.id+'">Delete</button>'
-							+ '</td></tr></tbody>');
+						type : "POST",
+						datatype : "json",
+						url : "http://localhost:8081/userservice/getAll",
+						success : function(json) {
+						}
+					})
+					.then(
+						function(json) {
+							json
+									.forEach(function(obj) {
+										$("#table")
+												.after(
+														''
+																+ '<tbody><tr><td>'
+																+ obj.id
+																+ '</td>'
+																+ '<td>'
+																+ obj.firstName
+																+ '</td>'
+																+ '<td>'
+																+ obj.lastName
+																+ '</td>'
+																+ '<td>'
+																+ obj.username
+																+ '</td>'
+																+ '<td>'
+																+ obj.password
+																+ '</td>'
+																+ '<td>'
+																+ obj.email
+																+ '</td>'
+																+ '<td>'
+																+ obj.role
+																+ '</td>' + '</tr></tbody>');
+									});
+							deleteRow();
 						});
-				deleteRow();
-			});
 		}
 
-		function deleteRow() {
+		function loadIds() {
 
-			$('button[name="delete"]')
-					.click(
-							function() {
-								alert('deleted');
-								var url = "http://localhost:8081/userservice/deleteUser/"
-										+ this.id;
-								$.ajax({
-									type : "DELETE",
-									url : url,
-									success : function(json) {
-										alert('User was succesfully deleted.');
-										loadPages();
-									}
-								})
-							})
+			$.ajax({
+						type : "POST",
+						datatype : "json",
+						url : "http://localhost:8081/userservice/getAll",
+						success : function(json) {
+						}
+					})
+					.then(
+						function(json) {
+							json
+									.forEach(function(obj) {
+										$("#selectChoices")
+												.after(
+											'' + '<option value="' + obj.id + '">'
+											+ 'id: ' + obj.id + '    '
+											+ '--------' + '     '
+											+ obj.username + '</option>');
+									});
+						});
 		}
+
 	</script>
 </body>
 </html>
