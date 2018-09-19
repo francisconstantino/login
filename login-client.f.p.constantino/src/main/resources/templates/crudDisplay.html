@@ -16,7 +16,7 @@
 	<br />
 	<div class="container">
 		<div class="text-center">
-			<h2>Admin CRUD</h2>
+			<h2>Welcome admin!</h2>
 		</div>
 		<div class="row">
 			<div>
@@ -42,9 +42,7 @@
 					</button></a>
 			</div> &nbsp; &nbsp;
 			<div>
-				<select class="browser-default" name="id">
-						<option value="" disabled="true" selected="true" name="id"
-							id="selectChoices">User ID's*</option>
+				<select class="browser-default" name="id" id="selectChoices">
 					</select>
 			</div>
 		</div>
@@ -133,14 +131,15 @@
 					})
 					.then(
 						function(json) {
-							json
-									.forEach(function(obj) {
+							json.forEach(function(obj) {
+								if(obj.role != "admin") {
 										$("#selectChoices")
-												.after(
+												.append(
 											'' + '<option value="' + obj.id + '">'
 											+ 'id: ' + obj.id + '    '
 											+ '--------' + '     '
 											+ obj.username + '</option>');
+											}
 									});
 						});
 		}

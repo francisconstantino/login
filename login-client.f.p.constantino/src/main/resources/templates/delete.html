@@ -52,9 +52,7 @@ button {
 			<legend>Delete User</legend>
 			<form method="POST" action="/deleteUser">
 				<div class="input-field col s12">
-					<select class="browser-default" name="id">
-						<option value="" disabled="true" selected="true" name="id"
-							id="selectChoices">Users*</option>
+					<select class="browser-default" name="id" id="selectChoices">
 					</select>
 				</div>
 				<div class="center-align">
@@ -88,11 +86,13 @@ button {
 			}).then(
 					function(json) {
 						json.forEach(function(obj) {
-							$("#selectChoices").after(
+							if(obj.role != "admin") {
+							$("#selectChoices").append(
 									'' + '<option value="' + obj.id + '">'
 											+ 'id: ' + obj.id + '    '
 											+ '--------' + '     '
 											+ obj.username + '</option>');
+							}
 						});
 					});
 		}
