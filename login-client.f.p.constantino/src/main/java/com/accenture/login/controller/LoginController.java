@@ -4,6 +4,7 @@ import java.util.Base64;
 
 import javax.ws.rs.core.MediaType;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +52,33 @@ public class LoginController {
 		} else {
 			mv.setViewName("index");
 		}
+		return mv;
+	}
+
+	@RequestMapping("/add")
+	public String add() {
+		return "add";
+	}
+
+	@RequestMapping("/addUser")
+	public ModelAndView addUser(@RequestParam String firstName, String lastName,
+			String username, String password, String email, String role, ModelAndView mv) throws JSONException {
+
+		JSONObject json = new JSONObject();
+		json.put("firstName", firstName);
+		json.put("lastName", lastName);
+		json.put("username", username);
+		json.put("password", password);
+		json.put("email", email);
+		json.put("role", role);
+
+		Client client = new Client();
+		WebResource wr = client.resource("http://localhost:8081/userservice/addUser");
+
+		ClientResponse response = wr.type(MediaType.APPLICATION_JSON)
+				.post(ClientResponse.class, json.toString());
+
+		mv.setViewName("crudDisplay");
 		return mv;
 	}
 }

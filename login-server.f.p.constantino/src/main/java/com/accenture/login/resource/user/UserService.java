@@ -3,6 +3,8 @@ package com.accenture.login.resource.user;
 import java.util.Base64;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -17,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.accenture.login.domain.User;
 import com.accenture.login.domain.UserRepository;
@@ -121,9 +124,31 @@ public class UserService {
 			json.put("email", user.getEmail());
 			json.put("username", user.getUsername());
 			json.put("password", user.getPassword());
+			json.put("role", user.getRole());
 			array.put(json);
 		}
 		return Response.status(200).entity(array.toString())
 				.type(MediaType.APPLICATION_JSON).build();
+	}
+
+	////http://localhost:8081/userservice/addUser
+//	@POST
+//	@Path("/addUser")
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	public void addUser(User user) {
+//		userRepository.save(user);
+//	}
+
+	@POST
+	@Path("/addUser")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void addUser(User user) {
+		userRepository.save(user);
+	}
+
+	@DELETE
+	@Path("/deleteUser/{id}")
+	public void deleteUser(@PathParam(value = "id") Long id) {
+		userRepository.delete(id);
 	}
 }

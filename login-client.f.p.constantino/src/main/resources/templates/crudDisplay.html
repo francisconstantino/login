@@ -11,22 +11,28 @@
 	crossorigin="anonymous" />
 </head>
 <body>
-	<br/>
-	<br/>
-	<br/>
+	<br />
+	<br />
+	<br />
 	<div class="container">
 		<div class="text-center">
 			<h2>Admin CRUD</h2>
 		</div>
+		<div class="text-center">
+			<a href="/add"><button class="btn btn-primary">Add User</button></a>
+		</div>
+		<br/>
 		<table class="table table-striped">
 			<thead id="table">
 				<tr>
-					<th scope="col" class="userinfo-id">#</th>
+					<th scope="col">#</th>
 					<th scope="col">First</th>
 					<th scope="col">Last</th>
 					<th scope="col">Username</th>
 					<th scope="col">Password</th>
 					<th scope="col">E-mail</th>
+					<th scope="col">Role</th>
+					<th scope="col">Update</th>
 				</tr>
 			</thead>
 		</table>
@@ -40,30 +46,37 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
 		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
 		crossorigin="anonymous"></script>
-		<script>
-	$(document).ready(function() {
+	<script>
+		$(document).ready(
+				function() {
 
-		$.ajax({
-			type: "POST",
-			datatype: "json",
-			url: "http://localhost:8081/userservice/getAll",
-			success: function(json) {
-				alert("Succesfully Retrieved Information.");
-			}
-		}).then(function(json) {
-			json.forEach(function(obj) {
-				$("#table").after("" + "<tbody>" + "<tr>" + "<td>" + obj.id + "</td>"
-				+ "<td>" + obj.firstName + "</td>"
-				+ "<td>" + obj.lastName + "</td>"
-				+ "<td>" + obj.username + "</td>"
-				+ "<td>" + obj.password + "</td>"
-				+ "<td>" + obj.email + "</td>"
-				+ "</tr>" + "</tbody>"
-				);
-			})
-		});
-	});
-
-</script>
+					$.ajax({
+						type : "POST",
+						datatype : "json",
+						url : "http://localhost:8081/userservice/getAll",
+						success : function(json) {
+							alert("Succesfully Retrieved Information.");
+						}
+					}).then(
+							function(json) {
+								json.forEach(function(obj) {
+									$("#table").after(
+											"" + "<tbody>" + "<tr>" + "<td>"
+													+ obj.id + "</td>" + "<td>"
+													+ obj.firstName + "</td>"
+													+ "<td>" + obj.lastName
+													+ "</td>" + "<td>"
+													+ obj.username + "</td>"
+													+ "<td>" + obj.password
+													+ "</td>" + "<td>"
+													+ obj.email + "</td>"
+													+ "<td>" + obj.role
+													+ "</td>"
+													+ "</tr>"
+													+ "</tbody>");
+								})
+							});
+				});
+	</script>
 </body>
 </html>
